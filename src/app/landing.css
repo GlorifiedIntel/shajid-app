@@ -1,0 +1,73 @@
+.landing-hero {
+  display: flex;
+  flex-direction: row;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.hero-image {
+  flex: 1;
+  background-image: url('/hero-banner.png'); /* Use your actual image path */
+  background-size: cover;
+  background-position: center;
+}
+
+.hero-text {
+  flex: 1;
+  background-color: rgba(0, 39, 75, 0.95); /* dark blue overlay */
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 3rem;
+  text-align: left;
+}
+
+.ranking {
+  font-size: 4rem;
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+}
+
+.main-text {
+  font-size: 2rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  line-height: 1.3;
+  margin-bottom: 1rem;
+}
+
+.sub-text {
+  font-style: italic;
+  font-size: 1rem;
+  color: #d1d5db;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .landing-hero {
+    flex-direction: column;
+  }
+
+  .hero-image,
+  .hero-text {
+    flex: none;
+    height: 50vh;
+    width: 100%;
+  }
+
+  .hero-text {
+    padding: 2rem;
+    text-align: center;
+  }
+
+  .ranking {
+    font-size: 3rem;
+  }
+
+  .main-text {
+    font-size: 1.25rem;
+  }
+}

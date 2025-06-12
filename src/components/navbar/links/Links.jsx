@@ -5,6 +5,7 @@ import NavLink from './navLink/navLink';
 
 const Links = () => {
   const links = [
+    { title: 'HOME', path: '/' },
     { title: 'SIGN IN', path: '/signin' },
     { title: 'CREATE ACCOUNT', path: '/createaccount' },
     { title: 'EVENTS', path: '/events' },

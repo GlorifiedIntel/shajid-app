@@ -2,7 +2,7 @@
   min-height: 100vh;
   display: flex;
   justify-content: center;
-  background: url('/your-background.jpg') no-repeat center center/cover;
+  background-color: var(--indigo-dye);
   color: white;
 }
 
@@ -16,9 +16,13 @@
 }
 
 .signin-title {
+  font-family: "Play", sans-serif;
+  font-weight: 400;
+  font-style: normal;
   font-size: 1.875rem;
   font-weight: bold;
   margin-bottom: 1rem;
+  
 }
 
 .create-account-btn {
