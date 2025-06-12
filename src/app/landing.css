@@ -9,14 +9,14 @@
 
 .hero-image {
   flex: 1;
-  background-image: url('/hero-banner.png'); /* Use your actual image path */
+  background-image: url('/nurse-6.png'); 
   background-size: cover;
   background-position: center;
 }
 
 .hero-text {
   flex: 1;
-  background-color: rgba(0, 39, 75, 0.95); /* dark blue overlay */
+  background-color: rgba(0, 39, 75, 0.95); 
   color: white;
   display: flex;
   flex-direction: column;
