@@ -5,7 +5,7 @@ import styles from './navbar.module.css';
 const Navbar = () => {
   return (
     <div className={styles.container}>
-      <div>logo</div>
+      <div className={styles.logo}>Shajid Collge <span className={styles.fontlight}>of Nursing & Midwifery</span></div>
       <div>
         <Links />
       </div>
