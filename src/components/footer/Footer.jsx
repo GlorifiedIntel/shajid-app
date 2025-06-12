@@ -1,25 +1,32 @@
 // src/components/Footer.jsx
+
+import styles from './Footer.module.css';
+
 const Footer = () => {
   return (
-    <footer className="footer">
-      <div className="footer-top">
+    <footer className={styles.footer}>
+      <div className={styles.footerTop}>
         <h2>Want to learn more about Shajid College?</h2>
-        <button className="info-button">Request Information</button>
+        <button className={styles.infoButton}>Request Information</button>
       </div>
 
-      <div className="footer-links">
-        <div className="column">
+      <div className={styles.footerLinks}>
+        <div className={styles.column}>
           <h4>Follow Us</h4>
-          <div className="social-icons">
+          <div className={styles.socialIcons}>
             <a href="#"><img src="/facebook-icon.png" alt="Facebook" /></a>
             <a href="#"><img src="/x-icon.png" alt="X (Twitter)" /></a>
             <a href="#"><img src="/youtube-icon.png" alt="YouTube" /></a>
             <a href="#"><img src="/instagram-icon.png" alt="Instagram" /></a>
           </div>
-          <p>Shajid Avenue,<br />Kano, NG 700234<br />(+234) 700-123-4567</p>
+          <p>
+            Shajid Avenue,<br />
+            Kano, NG 700234<br />
+            (+234) 700-123-4567
+          </p>
         </div>
 
-        <div className="column">
+        <div className={styles.column}>
           <h4>About Us</h4>
           <ul>
             <li><a href="#">Contact</a></li>
@@ -29,7 +36,7 @@ const Footer = () => {
           </ul>
         </div>
 
-        <div className="column">
+        <div className={styles.column}>
           <h4>Academics</h4>
           <ul>
             <li><a href="#">Find a Program</a></li>
@@ -39,7 +46,7 @@ const Footer = () => {
           </ul>
         </div>
 
-        <div className="column">
+        <div className={styles.column}>
           <h4>Resources</h4>
           <ul>
             <li><a href="#">Academic Calendar</a></li>
@@ -49,7 +56,7 @@ const Footer = () => {
           </ul>
         </div>
 
-        <div className="column">
+        <div className={styles.column}>
           <h4>Quick Links</h4>
           <ul>
             <li><a href="#">Directory</a></li>
@@ -60,7 +67,7 @@ const Footer = () => {
         </div>
       </div>
 
-      <div className="footer-bottom">
+      <div className={styles.footerBottom}>
         <p>&copy; {new Date().getFullYear()} Shajid College of Nursing and Midwifery</p>
         <ul>
           <li><a href="#">Terms</a></li>
