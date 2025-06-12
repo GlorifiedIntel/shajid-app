@@ -40,9 +40,9 @@
 }
 
 .sub-text {
-  font-style: italic;
+  font-family: Arial, Helvetica, sans-serif;
   font-size: 1rem;
-  color: #d1d5db;
+  color: #9ea0a1;
 }
 
 /* Responsive Design */
