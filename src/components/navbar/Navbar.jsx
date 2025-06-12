@@ -1,18 +1,15 @@
-import Link from "next/link";
+import React from 'react';
+import Links from "./links/Links";
 
 const Navbar = () => {
-  return <div>
-    <div>logo</div>
+  return (
     <div>
-      <Link href="/">Home</Link>
-      <Link href="/signin">SIGN IN</Link>
-      <Link href="/createaccount">CREATE ACCOUNT</Link>
-      <Link href="/apply">APPLY</Link>
-      <Link href="/events">EVENTS</Link>
-      <Link href="/nursing">NURSING</Link>
-      <Link href="/midwifery">MIDWIFERY</Link>
+      <div>logo</div>
+      <div>
+        <Links />
       </div>
-  </div>;
+    </div>
+  );
 };
 
 export default Navbar;
