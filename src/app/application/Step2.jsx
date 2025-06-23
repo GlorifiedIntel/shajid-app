@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import styles from './appliation.module.css';
+import styles from './application.module.css';
 
 export default function Step2({ onNext, onBack, onSaveExit }) {
   const [form, setForm] = useState({

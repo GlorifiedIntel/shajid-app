@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import styles from './register.module.css';
+import styles from './application.module.css';
 
 export default function Step7({ data, onBack, clearForm, onSaveExit }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
