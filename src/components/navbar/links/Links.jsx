@@ -9,8 +9,8 @@ const Links = () => {
     { title: 'SIGN IN', path: '/signin' },
     { title: 'CREATE ACCOUNT', path: '/createaccount' },
     { title: 'EVENTS', path: '/events' },
-    { title: 'NURSING', path: '/nursing' },
-    { title: 'MIDWIFERY', path: '/midwifery' },
+    { title: 'PROGRAMS', path: '/programs' },
+    { title: 'APPLY NOW', path: '/application' },
   ];
 
   return (

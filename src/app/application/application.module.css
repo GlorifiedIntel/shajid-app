@@ -1,0 +1,180 @@
+.form-wrapper {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 2rem;
+  border: 1px solid #ccc;
+  background-color: #fefefe;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  font-weight: 500;
+}
+
+input, select, textarea {
+  padding: 10px;
+  border: 1px solid #aaa;
+  border-radius: 5px;
+  font-size: 1rem;
+  background: #fff;
+}
+
+input[type="file"] {
+  padding: 5px;
+}
+
+button {
+  padding: 10px 20px;
+  border: none;
+  background-color: #0070f3;
+  color: white;
+  font-weight: bold;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #005bb5;
+}
+
+.step-indicator {
+  margin-bottom: 1rem;
+  font-size: 0.95rem;
+  color: #666;
+}
+
+fieldset {
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
+legend {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+
+.progress-bar-container {
+  height: 12px;
+  background-color: #e0e0e0;
+  border-radius: 6px;
+  overflow: hidden;
+  margin-bottom: 1rem;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background-color: #0070f3;
+  transition: width 0.3s ease-in-out;
+}
+
+.breadcrumbs {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+}
+
+.step-item {
+  flex: 1;
+  text-align: center;
+  padding: 5px 8px;
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  color: #666;
+  transition: all 0.3s ease;
+}
+
+.step-item.active {
+  color: #0070f3;
+  font-weight: bold;
+  border-color: #0070f3;
+}
+
+.step-item.completed {
+  color: #28a745;
+  font-weight: bold;
+  border-color: #28a745;
+}
+
+
+button:last-child {
+  background-color: #666;
+  margin-top: 0.5rem;
+}
+
+button:last-child:hover {
+  background-color: #444;
+}
+
+.spinner {
+  width: 16px;
+  height: 16px;
+  border: 3px solid #f3f3f3;
+  border-top: 3px solid #0070f3;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 8px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+
+.reviewSection {
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  background-color: #f5f7fa;
+  border-left: 4px solid #0070f3;
+  border-radius: 5px;
+}
+
+.reviewSection h4 {
+  margin-bottom: 0.5rem;
+  color: #0070f3;
+}
+
+.reviewSection p {
+  margin: 0.25rem 0;
+  font-size: 0.95rem;
+}
+
+@media print {
+  button, input { display: none !important; }
+}
+
+.pdfContainer {
+  padding: 1rem;
+  color: #333;
+}
+
+.pdfContainer h2 {
+  text-align: center;
+  border-bottom: 2px solid #0070f3;
+  padding-bottom: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+@media (max-width: 600px) {
+  .form-wrapper {
+    padding: 1rem;
+  }
+
+  input, select, textarea {
+    font-size: 0.95rem;
+  }
+}
