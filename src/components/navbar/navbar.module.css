@@ -5,19 +5,15 @@
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    padding-left: 50px;
-    padding-right: 50px;
+   padding: 2rem;
     
 }
 
-.logo {
-    font-size: 40px;
-    font-family: "Play", sans-serif;
-    font-weight: 700;
-    font-style: normal;
-    color: chocolate;
-
+.logoImage {
+  height: 115px;
+  width: auto;
 }
+
 
 .fontlight {
     font-size: 30px;
@@ -26,4 +22,11 @@
     font-style: normal;
     color: var(--white-smoke);
     
+}
+
+
+
+.logoImage {
+  height: 50px;
+  width: auto;
 }
