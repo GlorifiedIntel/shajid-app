@@ -12,6 +12,7 @@
   background-image: url('/female-nurse.png'); 
   background-size: cover;
   background-position: center;
+  background-color: none;
 }
 
 .hero-text {
