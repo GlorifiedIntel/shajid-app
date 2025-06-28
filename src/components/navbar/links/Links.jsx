@@ -8,8 +8,6 @@ const Links = () => {
     { title: 'HOME', path: '/' },
     { title: 'SIGN IN', path: '/signin' },
     { title: 'CREATE ACCOUNT', path: '/createaccount' },
-    { title: 'EVENTS', path: '/events' },
-    { title: 'PROGRAMS', path: '/programs' },
     { title: 'APPLY NOW', path: '/application' },
   ];
 

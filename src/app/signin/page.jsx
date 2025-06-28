@@ -1,71 +1,46 @@
-import './signin.css'; 
+'use client';
+import { useState } from 'react';
+import '../landing.css'; // adjust path if needed
+import Link from 'next/link';
 
-const SignInPage = () => {
+export default function SignInPage() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // TODO: handle login logic
+  };
+
   return (
-    <div className="signin-container">
-      <div className="signin-content">
-        <h1 className="signin-title">SHAJID COLLEGE LOGIN</h1>
-        <button className="create-account-btn">Create Account</button>
+    <div className="auth-container">
+      <form className="auth-form" onSubmit={handleSubmit}>
+        <h2>Sign In</h2>
+        <input
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+        />
+        <input
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+        />
 
-        <form className="signin-form">
-          <div>
-            <label className="form-label">Email</label>
-            <input type="email" className="input-field" placeholder="Enter your email" />
-          </div>
-          <div>
-            <label className="form-label">Password</label>
-            <div className="password-container">
-              <input type="password" className="input-password" placeholder="Enter your password" />
-              <button type="button" className="show-btn">SHOW</button>
-            </div>
-          </div>
-
-          <div className="recaptcha-box">
-            <p>I'm not a robot</p>
-            <p className="recaptcha-hint">reCAPTCHA - Privacy - Terms</p>
-          </div>
-
-          <div className="forgot-link">
-            <a href="#">Forgot your password?</a>
-          </div>
-
-          <div className="checkbox-group">
-            <label className="checkbox-label">
-              <input type="checkbox" />
-              <span>Remember Me</span>
-            </label>
-
-            <label className="checkbox-label">
-              <input type="checkbox" />
-              <span>Are you signed in from a public computer?</span>
-            </label>
-          </div>
-
-          <button type="submit" className="signin-btn">Sign In</button>
-
-          <hr className="divider" />
-
-          <button type="button" className="google-signin-btn">
-            <span>Sign in with Google</span>
-          </button>
-        </form>
-
-        <div className="footer">
-          <p>
-            | Shajid College of Nursinf & Midwifery, Akwanga, Nasarawa State | <br /> Phone: +234 123456789
-          </p>
-          <p className="footer-note">
-            Shajid College is committed to a learning and working environment free from
-            discrimination, including harassment. For Shajid College's non-discrimination
-            notice, see{' '}
-            <a href="https://equity.shajidcollege.edu/non-discrimination" target="_blank" rel="noopener noreferrer">
-              equity.shajidcollege.edu/non-discrimination
-            </a>.
-          </p>
+        <div className="forgot-link">
+          <Link href="#">Forgot your password?</Link>
         </div>
-      </div>
+
+        <button type="submit">Sign In</button>
+
+        <div className="switch-auth">
+          Don’t have an account? <Link href="/createaccount">Create one</Link>
+        </div>
+      </form>
     </div>
   );
-};
-
-export default SignInPage;
+}
