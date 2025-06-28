@@ -154,7 +154,7 @@
   color: #fff;
   padding: 1.5rem 0;
   text-align: center;
-  margin-top: 4rem;
+  
 }
 
 .footer-content {
@@ -230,4 +230,113 @@
 .footer-content a.octate-link:hover {
   color: #2791bb;
   text-decoration: underline;
+}
+
+.form-logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+/* Dashboard Styles */
+.dashboard-wrapper {
+  display: flex;
+  min-height: 100vh;
+}
+
+.dashboard-sidebar {
+  width: 220px;
+  background-color: #013f66;
+  color: #fff;
+  padding: 2rem 1rem;
+}
+
+.dashboard-sidebar h2 {
+  margin-bottom: 1rem;
+}
+
+.dashboard-sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.dashboard-sidebar ul li {
+  margin-bottom: 1rem;
+}
+
+.dashboard-sidebar a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.dashboard-main {
+  flex: 1;
+  padding: 2rem;
+  background-color: #f5f5f5;
+}
+
+.logout-button {
+  background-color: #cc0000;
+  color: white;
+  padding: 0.6rem 1.2rem;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+  margin-top: 2rem;
+}
+
+.sidebar-logo {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.dashboard-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.dashboard-sidebar {
+  background-color: #013f66;
+  color: #fff;
+  padding: 2rem 1rem;
+  text-align: center;
+}
+
+.dashboard-main {
+  flex: 1;
+  padding: 2rem;
+  background-color: #f5f5f5;
+}
+
+/* Responsive layout for medium and larger screens */
+@media (min-width: 768px) {
+  .dashboard-wrapper {
+    flex-direction: row;
+  }
+
+  .dashboard-sidebar {
+    width: 220px;
+    min-height: 100vh;
+    text-align: left;
+  }
+
+  .dashboard-main {
+    padding: 2rem 3rem;
+  }
+
+  .sidebar-logo {
+    text-align: left;
+    margin-bottom: 1.5rem;
+  }
+}
+
+.sidebar-menu a {
+  color: #fff;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-weight: 500;
 }
