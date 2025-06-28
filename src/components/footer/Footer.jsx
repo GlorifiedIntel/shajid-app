@@ -13,25 +13,25 @@ export default function Footer() {
         <p>&copy; {new Date().getFullYear()} Shajid College of Nursing and Midwifery. All rights reserved.</p>
 
         <p>
-          Designed & Developed by{' '}
-          <a
-            href="https://www.linkedin.com/in/kevin-cross-minchakpu-7897379a"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="highlight"
-          >
-            Kevin Cross Minchakpu
-          </a>{' '}
-          | Powered by{' '}
-          <a
-            href="https://octatesystems.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="highlight"
-          >
-            Octate Systems
-          </a>
-        </p>
+  Designed & Developed by{' '}
+  <a
+    href="https://www.linkedin.com/in/kevin-cross-minchakpu-7897379a"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="kevin-link"
+  >
+    Kevin Cross Minchakpu
+  </a>{' '}
+  | Powered by{' '}
+  <a
+    href="https://octatesystems.github.io/OSNigeria/"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="octate-link"
+  >
+    Octate Systems
+  </a>
+</p>
 
         <nav className="footer-links">
           <a href="/">Home</a> | 

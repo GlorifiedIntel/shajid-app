@@ -201,11 +201,33 @@
 .social-icons a:nth-child(5):hover { color: #25d366; }  /* WhatsApp */
 
 .highlight {
-  color: #0070f3;
+  color: #f3ba00;
   font-weight: bold;
   text-decoration: none;
 }
 
 .highlight:hover {
+  text-decoration: underline;
+}
+
+.footer-content a.kevin-link {
+  color: #a0fc8e;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.footer-content a.kevin-link:hover {
+  color: #f0cf15;
+  text-decoration: underline;
+}
+
+.footer-content a.octate-link {
+  color: #ff5722;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.footer-content a.octate-link:hover {
+  color: #2791bb;
   text-decoration: underline;
 }
