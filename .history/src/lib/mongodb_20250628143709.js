@@ -34,26 +34,3 @@ export async function disconnectFromDB() {
     cached.conn = null;
   }
 }
-
-let cachedClient = null;
-
-export async function gfsUpload(stream, filename, userId, field) {
-  if (!cachedClient) {
-    const client = new MongoClient(MONGODB_URI);
-    await client.connect();
-    cachedClient = client;
-  }
-
-  const db = cachedClient.db(DB_NAME);
-  const bucket = new GridFSBucket(db, { bucketName: 'uploads' });
-
-  return new Promise((resolve, reject) => {
-    const uploadStream = bucket.openUploadStream(filename, {
-      metadata: { userId, field },
-    });
-
-    stream.pipe(uploadStream)
-      .on('error', (error) => reject(error))
-      .on('finish', () => resolve(uploadStream));
-  });
-}
