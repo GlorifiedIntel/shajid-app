@@ -1,0 +1,40 @@
+/* Dashboard Styles */
+.dashboard-container {
+  padding: 2rem;
+  max-width: 800px;
+  margin: auto;
+}
+
+.dashboard-container h1 {
+  font-size: 1.75rem;
+  margin-bottom: 1rem;
+}
+
+.dashboard-container a.btn,
+.dashboard-container button {
+  margin-top: 1rem;
+  padding: 0.75rem 1.25rem;
+  font-size: 1rem;
+  display: inline-block;
+}
+
+.sidebar-profile {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.profile-img {
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 0.5rem;
+}
+
+.welcome-text {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #aaa;
+}
+
+.sidebar-title {
+  display: none;
+}

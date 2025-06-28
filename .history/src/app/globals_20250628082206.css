@@ -1,0 +1,44 @@
+:root {
+    --bg: #fdfdff;
+    --btn: #2A3D45;
+    --primary: #0E103D;
+    --secondary: #14453D;
+    --delft-blue:#183059;
+    --white-smoke:#F6F4F3;
+    --indigo-dye: #124E78;
+    --cream:#F0F0C9;
+    --prussian-blue: #102B3F;
+    --midnigth-green:#003844;
+    --caribbean-current:#006C67;
+    --gunmetal:#122C34;
+    --navbar-bg: #242038;
+    --jasper: #CD5334
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg);
+    color: var(--white-smoke);
+    
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.container {
+    width: 100%;
+    margin: auto;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    }
+
+  
