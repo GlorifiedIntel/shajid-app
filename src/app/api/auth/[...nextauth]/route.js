@@ -1,7 +1,8 @@
 import NextAuth from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
-import { connectToDB } from '@/lib/mongodb'; // ✅ Corrected
+import { connectToDB } from '@/lib/mongodb';
 import User from '@/models/User';
+import bcrypt from 'bcryptjs';
 
 export const authOptions = {
   providers: [
@@ -13,11 +14,21 @@ export const authOptions = {
       },
       async authorize(credentials) {
         await connectToDB();
+
         const user = await User.findOne({ email: credentials.email });
 
-        if (!user) throw new Error('No user found');
-        const isValid = await user.comparePassword(credentials.password);
-        if (!isValid) throw new Error('Invalid credentials');
+        if (!user) {
+          throw new Error('Invalid email or password');
+        }
+
+        const isValid = await bcrypt.compare(credentials.password, user.password);
+        if (!isValid) {
+          throw new Error('Invalid email or password');
+        }
+
+        if (!user.emailVerified) {
+          throw new Error('Please verify your email before signing in.');
+        }
 
         return {
           id: user._id.toString(),
@@ -28,38 +39,28 @@ export const authOptions = {
       },
     }),
   ],
-
-  callbacks: {
-    async jwt({ token, user }) {
-      if (user) {
-        token.role = user.role || 'applicant';
-        token.id = user.id || user._id?.toString();
-      }
-      return token;
-    },
-
-    async session({ session, token }) {
-      if (token) {
-        session.user.id = token.id;
-        session.user.role = token.role;
-      }
-      return session;
-    },
-  },
-
   pages: {
-    signIn: '/auth/login',
-    error: '/auth/error',
+    signIn: '/auth/sign-in',
   },
-
   session: {
     strategy: 'jwt',
   },
-
-  secret: process.env.NEXTAUTH_SECRET,
+  callbacks: {
+    async jwt({ token, user }) {
+      if (user) {
+        token.id = user.id;
+        token.role = user.role;
+      }
+      return token;
+    },
+    async session({ session, token }) {
+      session.user.id = token.id;
+      session.user.role = token.role;
+      return session;
+    },
+  },
 };
 
 const handler = NextAuth(authOptions);
+
 export { handler as GET, handler as POST };
-// This file handles the NextAuth authentication for the application.
-// It uses CredentialsProvider to authenticate users with email and password.

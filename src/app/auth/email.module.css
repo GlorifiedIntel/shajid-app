@@ -1,0 +1,49 @@
+.container {
+  max-width: 500px;
+  margin: 4rem auto;
+  padding: 2rem;
+  text-align: center;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  background-color: #f9f9f9;
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: #069b32;
+}
+
+.title2 {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: #9b0612;
+}
+
+.message {
+  font-size: 1rem;
+  margin-bottom: 2rem;
+  color: #333;
+}
+
+
+.link {
+  display: inline-block;
+  padding: 0.6rem 1.2rem;
+  background-color: #0D3B66;
+  color: #fff;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.link:hover {
+  background-color: #005bb5;
+}
+
+.icon {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+}
