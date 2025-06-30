@@ -88,7 +88,6 @@ a {
   background: #6c757d;
 }
 
-/* Payment Box Styles */
 .payment-box {
   padding: 2rem;
   border: 1px solid #ccc;
@@ -100,7 +99,7 @@ a {
 
 .paystack-button {
   padding: 0.7rem 2rem;
-  background-color: #579b6e;
+  background-color: #0aa83f;
   color: white;
   border: none;
   font-weight: bold;
@@ -109,5 +108,5 @@ a {
 }
 
 .paystack-button:hover {
-  background-color: #174d79;
+  background-color: #098437;
 }

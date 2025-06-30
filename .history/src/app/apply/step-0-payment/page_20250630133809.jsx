@@ -6,7 +6,7 @@ import Step0Payment from '@/components/forms/Step0Payment';
 export default async function Page() {
   const session = await getServerSession(authOptions);
 
-  if (!session) redirect('/auth/sign-in');
+  if (!session) redirect('/app/auth/sign-in');
 
   return (
     <div className="form-wrapper">
