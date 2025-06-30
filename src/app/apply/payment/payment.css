@@ -1,6 +1,6 @@
 .payment-container {
   width: 500px;
-  width: 500px;
+  width: 600px;
   margin: 50px auto;
   padding: 30px;
   text-align: center;
@@ -36,6 +36,7 @@
 .payment-methods {
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 10px;
   
 }
@@ -49,6 +50,7 @@
   border-radius: 4px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  width: 300px;
 }
 
 .payment-icon {
@@ -57,7 +59,7 @@
 }
 
 .payment-button:hover {
-  background-color: #0056b3;
+  background-color: #b89112;
 }
 
 .payment-note {
