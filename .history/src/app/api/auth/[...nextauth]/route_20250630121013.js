@@ -1,7 +1,7 @@
 import NextAuth from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
-import { connectToDB } from '@/lib/mongodb'; // ✅ Corrected
-import User from '@/models/User';
+import mongodb from '@/lib/mongodb'; // your DB connection util
+import User from '@/models/User'; // your User model
 
 export const authOptions = {
   providers: [
@@ -12,7 +12,7 @@ export const authOptions = {
         password: { label: 'Password', type: 'password' },
       },
       async authorize(credentials) {
-        await connectToDB();
+        await mongodb.connectToDB();
         const user = await User.findOne({ email: credentials.email });
 
         if (!user) throw new Error('No user found');
@@ -23,7 +23,7 @@ export const authOptions = {
           id: user._id.toString(),
           name: user.name,
           email: user.email,
-          role: user.role,
+          role: user.role, // include role in JWT
         };
       },
     }),

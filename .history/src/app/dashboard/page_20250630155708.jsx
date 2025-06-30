@@ -12,7 +12,7 @@ export default async function ApplicantDashboard() {
     <div className="dashboard-message-card">
       <h2>Access Restricted</h2>
       <p>You must be signed in to view your dashboard.</p>
-      <a href="/auth/sign-in" className="dashboard-signin-link">Go to Sign In</a>
+      <a href="/auth/signin" className="dashboard-signin-link">Go to Sign In</a>
     </div>
   );
 }
