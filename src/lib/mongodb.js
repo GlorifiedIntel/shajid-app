@@ -3,7 +3,7 @@ import { MongoClient, GridFSBucket } from 'mongodb';
 import { Readable } from 'stream';
 
 const MONGODB_URI = process.env.MONGODB_URI;
-const DB_NAME = process.env.DB_NAME || 'your-db-name'; // set this in your .env
+const DB_NAME = process.env.DB_NAME || 'Shajid-Cluster0'; // set this in your .env
 
 if (!MONGODB_URI) {
   throw new Error('Please define the MONGODB_URI environment variable');
