@@ -1,6 +1,6 @@
 import NextAuth from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
-import dbConnect from '@/lib/dbConnect'; // your DB connection util
+import mongodb from '@/lib/mongodb'; // your DB connection util
 import User from '@/models/User'; // your User model
 
 export const authOptions = {
@@ -12,7 +12,7 @@ export const authOptions = {
         password: { label: 'Password', type: 'password' },
       },
       async authorize(credentials) {
-        await dbConnect();
+        await mongodb.connectToDB();
         const user = await User.findOne({ email: credentials.email });
 
         if (!user) throw new Error('No user found');

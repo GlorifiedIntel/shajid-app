@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import styles from './create-account.module.css';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Image from 'next/image'; 
 
 export default function CreateAccountPage() {
   const [form, setForm] = useState({ name: '', email: '', password: '' });
@@ -39,7 +40,17 @@ export default function CreateAccountPage() {
   return (
     <>
       <form onSubmit={handleSubmit} className={styles.container}>
-        <h2>Create an Account</h2>
+        {/* Logo at the top */}
+        <div className={styles.logoContainer}>
+          <Image
+            src="/shajid-logo.png" 
+            alt="Logo"
+            width={100}
+            height={100}
+          />
+        </div>
+
+        <h2 className={styles.title}>Create an Account</h2>
 
         <input
           name="name"
@@ -48,6 +59,7 @@ export default function CreateAccountPage() {
           value={form.name}
           onChange={handleChange}
           required
+          className={styles.inputField}
         />
 
         <input
@@ -57,6 +69,7 @@ export default function CreateAccountPage() {
           value={form.email}
           onChange={handleChange}
           required
+          className={styles.inputField}
         />
 
         <input
@@ -66,9 +79,10 @@ export default function CreateAccountPage() {
           value={form.password}
           onChange={handleChange}
           required
+          className={styles.inputField}
         />
 
-        <button type="submit" disabled={loading}>
+        <button type="submit" disabled={loading} className={styles.submitButton}>
           {loading ? 'Creating account...' : 'Create Account'}
         </button>
 

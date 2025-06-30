@@ -1,7 +1,10 @@
+'use client';
+
 import { signIn } from 'next-auth/react';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import styles from './sign-in.module.css';
+import Image from 'next/image';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -44,7 +47,16 @@ export default function SignInPage() {
   return (
     <>
       <form onSubmit={handleSubmit} className={styles.container}>
-        <h2>Sign In</h2>
+        {/* Logo at the top */}
+        <div className={styles.logoContainer}>
+          <Image
+            src="/shajid-logo.png" 
+            alt="Logo"
+            width={100}
+            height={100}
+          />
+        </div>
+        <h2 className={styles.title}>Sign In</h2>
 
         <input
           name="email"
@@ -53,6 +65,7 @@ export default function SignInPage() {
           value={form.email}
           onChange={handleChange}
           required
+          className={styles.inputField}
         />
 
         <input
@@ -62,9 +75,10 @@ export default function SignInPage() {
           value={form.password}
           onChange={handleChange}
           required
+          className={styles.inputField}
         />
 
-        <button type="submit" disabled={loading}>
+        <button type="submit" disabled={loading} className={styles.submitButton}>
           {loading ? 'Signing in...' : 'Sign In'}
         </button>
 
