@@ -5,7 +5,6 @@ import {
   FaYoutube,
   FaWhatsapp,
 } from 'react-icons/fa';
-import './Footer.css'; // Ensure you have a CSS file for styling
 
 export default function Footer() {
   return (
