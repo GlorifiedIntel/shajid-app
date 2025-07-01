@@ -23,7 +23,7 @@ export async function generatePDFAndSendEmail(userId, fullForm) {
   } = fullForm;
 
   // Step 1: Generate PDF
-  const doc = new PDFDocument({ margin: 50 });
+  const doc = new PDFDocument();
   const buffers = [];
 
   doc.on('data', buffers.push.bind(buffers));
@@ -35,15 +35,17 @@ export async function generatePDFAndSendEmail(userId, fullForm) {
     const { db } = await connectToDB();
     const bucket = new GridFSBucket(db, { bucketName: 'pdfs' });
 
-    await bucket.deleteMany({ 'metadata.userId': userId }).catch(() => {});
+    await bucket.deleteMany({ 'metadata.userId': userId }).catch(() => {}); // Remove old PDFs
+
     const uploadStream = bucket.openUploadStream('application.pdf', {
       metadata: { userId },
     });
+
     stream.pipe(uploadStream);
 
-    // Step 3: Send Email
+    // Step 3: Send Email with attachment
     const transporter = nodemailer.createTransport({
-      service: 'gmail',
+      service: 'gmail', // ✅ change to your email provider
       auth: {
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASS,
@@ -64,15 +66,9 @@ export async function generatePDFAndSendEmail(userId, fullForm) {
     });
   });
 
-  // ✅ HEADER: Insert logo
-  try {
-    doc.image('public/shajid-logo.png', 50, 30, { width: 80 }); // adjust path/size as needed
-  } catch (err) {
-    console.warn('Logo not found or invalid format.');
-  }
-
-  doc.fontSize(20).text('Shajid College Application Summary', 150, 40, { align: 'left' });
-  doc.moveDown(2);
+  // Write PDF content
+  doc.fontSize(18).text('Shajid College Application Summary', { align: 'center' });
+  doc.moveDown();
 
   const section = (title) => {
     doc.moveDown().fontSize(14).text(title, { underline: true });

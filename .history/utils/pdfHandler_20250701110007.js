@@ -66,7 +66,7 @@ export async function generatePDFAndSendEmail(userId, fullForm) {
 
   // ✅ HEADER: Insert logo
   try {
-    doc.image('public/shajid-logo.png', 50, 30, { width: 80 }); // adjust path/size as needed
+    doc.image('public/logo.png', 50, 30, { width: 80 }); // adjust path/size as needed
   } catch (err) {
     console.warn('Logo not found or invalid format.');
   }
