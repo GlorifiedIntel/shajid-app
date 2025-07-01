@@ -59,7 +59,7 @@ export default function ForgotPasswordPage() {
         {error && <p className="error-msg">{error}</p>}
 
         <div className="switch-auth">
-          Remember your password? <Link href="/sign-in">Sign in</Link>
+          Remember your password? <Link href="/signin">Sign in</Link>
         </div>
       </form>
     </div>
