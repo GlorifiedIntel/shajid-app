@@ -40,7 +40,15 @@ export default function SignInPage() {
         toast.error('Only applicants can sign in here');
       }
     } else {
-      toast.error('Invalid credentials');
+      if (res.error === 'Please verify your email before signing in.') {
+        toast.error('Email not verified');
+        // ✅ Redirect with email as query param
+        setTimeout(() => {
+          router.push(`/auth/email-verification-failed?email=${encodeURIComponent(form.email)}`);
+        }, 1000);
+      } else {
+        toast.error('Invalid email or password');
+      }
     }
   };
 
@@ -50,12 +58,13 @@ export default function SignInPage() {
         {/* Logo at the top */}
         <div className={styles.logoContainer}>
           <Image
-            src="/shajid-logo.png" 
+            src="/shajid-logo.png"
             alt="Logo"
             width={100}
             height={100}
           />
         </div>
+
         <h2 className={styles.title}>Sign In</h2>
 
         <input
@@ -83,7 +92,7 @@ export default function SignInPage() {
         </button>
 
         <p className={styles.link}>
-          Don't have an account?{' '}
+          Don&apos;t have an account?{' '}
           <a href="/auth/create-account">Create Account</a>
         </p>
       </form>
