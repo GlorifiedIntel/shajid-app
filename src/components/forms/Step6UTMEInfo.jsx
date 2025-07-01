@@ -3,7 +3,7 @@
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useFormData } from '@/context/FormContext';
+import { useFormContext } from '@/context/MultiStepContext'; // ✅ Correct hook
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
@@ -34,7 +34,7 @@ const jambSubjectOptions = [
 ];
 
 export default function Step6UTMEInfo({ savedData }) {
-  const { updateFormData } = useFormData();
+  const { updateUTMEInfo } = useFormContext(); // ✅ Correct updater
   const { data: session } = useSession();
   const router = useRouter();
 
@@ -53,7 +53,6 @@ export default function Step6UTMEInfo({ savedData }) {
     },
   });
 
-  // Optional: Ensure prefill when `savedData` loads late
   useEffect(() => {
     if (savedData) {
       Object.entries(savedData).forEach(([key, value]) => {
@@ -65,7 +64,7 @@ export default function Step6UTMEInfo({ savedData }) {
   const selectedSubjects = watch('jambSubjects', []);
 
   const onSubmit = async (formValues) => {
-    updateFormData('step6', formValues);
+    updateUTMEInfo(formValues); // ✅ Save in context
 
     await fetch('/api/apply/step-6', {
       method: 'POST',

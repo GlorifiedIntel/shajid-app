@@ -1,3 +1,5 @@
+export const runtime = 'nodejs';
+
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import { connectToDB } from '@/lib/mongodb';
@@ -20,7 +22,7 @@ export async function GET() {
 
   const chunks = [];
   return new Promise((resolve, reject) => {
-    downloadStream.on('data', chunk => chunks.push(chunk));
+    downloadStream.on('data', (chunk) => chunks.push(chunk));
     downloadStream.on('end', () => {
       const buffer = Buffer.concat(chunks);
       resolve(
@@ -28,11 +30,14 @@ export async function GET() {
           status: 200,
           headers: {
             'Content-Type': 'application/pdf',
-            'Content-Disposition': `attachment; filename="application.pdf"`,
+            'Content-Disposition': 'attachment; filename="application.pdf"',
           },
         })
       );
     });
-    downloadStream.on('error', () => reject(new NextResponse('Download error', { status: 500 })));
+    downloadStream.on('error', (err) => {
+      console.error('GridFS download error:', err);
+      reject(new NextResponse('Download error', { status: 500 }));
+    });
   });
 }

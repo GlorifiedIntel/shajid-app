@@ -1,99 +1,76 @@
 'use client';
 
 import { useForm } from 'react-hook-form';
-import { z } from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useFormData } from '@/context/FormContext';
-import { useSession } from 'next-auth/react';
-import { useState } from 'react';
+import { useFormContext } from '@/context/MultiStepContext';
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 
-const schema = z.object({
-  fullName: z.string().min(1),
-  dob: z.string().min(1),
-  address: z.string().min(1),
-  parentsName: z.string().min(1),
-  parentsContact: z.string().min(1),
-});
+export default function Step1PersonalInfo({ savedData }) {
+  const { register, handleSubmit, setValue } = useForm();
+  const { updatePersonalInfo } = useFormContext();
+  const router = useRouter();
+  const [preview, setPreview] = useState('');
 
-export default function Step1PersonalInfo() {
-  const { data: session } = useSession();
-  const { updateFormData } = useFormData();
-  const [passportPreview, setPassportPreview] = useState(null);
-  const [passportFile, setPassportFile] = useState(null);
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({ resolver: zodResolver(schema) });
-
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setPassportFile(file);
-      setPassportPreview(URL.createObjectURL(file));
-    }
-  };
-
-  const onSubmit = async (formValues) => {
-    let fileId = null;
-
-    if (passportFile) {
-      const uploadForm = new FormData();
-      uploadForm.append('passport', passportFile);
-      uploadForm.append('userId', session?.user?.id);
-
-      const res = await fetch('/api/upload/passport', {
-        method: 'POST',
-        body: uploadForm,
+  // Load saved data and passport preview
+  useEffect(() => {
+    if (savedData) {
+      Object.entries(savedData).forEach(([key, value]) => {
+        setValue(key, value);
+        if (key === 'passportPreview') setPreview(value);
       });
-
-      const uploadResult = await res.json();
-      fileId = uploadResult.fileId;
     }
+  }, [savedData, setValue]);
 
-    const payload = { ...formValues, passportFileId: fileId };
-    updateFormData('step1', payload);
-
-    await fetch('/api/apply/step-1', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        userId: session?.user?.id,
-        data: payload,
-      }),
+  const onSubmit = async (data) => {
+    updatePersonalInfo({
+      ...data,
+      passportFile: data.passport[0],
+      passportPreview: preview,
     });
 
-    // move to step 2
+    // Optionally save to backend here:
+    await fetch('/api/form/save', { method: 'POST', body: JSON.stringify({ step: 1, data }) });
+
+    router.push('/apply/step-2-health-info');
+  };
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setPreview(reader.result);
+      setValue('passport', [file]); // Update form hook
+    };
+    reader.readAsDataURL(file);
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <label>Full Name</label>
-      <input {...register('fullName')} />
-      {errors.fullName && <p>{errors.fullName.message}</p>}
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+      <input {...register('fullName')} placeholder="Full Name" required />
+      <input {...register('gender')} placeholder="Gender" required />
+      <input {...register('email')} type="email" placeholder="Email" required />
+      <input {...register('phone')} placeholder="Phone" required />
+      <input {...register('contactAddress')} placeholder="Contact Address" required />
+      <input {...register('dateOfBirth')} type="date" required />
+      <input {...register('parentsName')} placeholder="Parent/Guardian Name" required />
+      <input {...register('parentsContactAddress')} placeholder="Parent's Contact Address" required />
 
-      <label>Date of Birth</label>
-      <input type="date" {...register('dob')} />
-      {errors.dob && <p>{errors.dob.message}</p>}
+      <div>
+        <label>Upload Passport Photo</label>
+        <input
+          type="file"
+          accept="image/*"
+          {...register('passport')}
+          onChange={handleImageChange}
+          required={!preview}
+        />
+        {preview && <img src={preview} alt="Preview" width={100} className="mt-2 rounded" />}
+      </div>
 
-      <label>Contact Address</label>
-      <textarea {...register('address')} />
-      {errors.address && <p>{errors.address.message}</p>}
-
-      <label>Parents' Name</label>
-      <input {...register('parentsName')} />
-      {errors.parentsName && <p>{errors.parentsName.message}</p>}
-
-      <label>Parents' Contact Address</label>
-      <input {...register('parentsContact')} />
-      {errors.parentsContact && <p>{errors.parentsContact.message}</p>}
-
-      <label>Passport Photograph</label>
-      <input type="file" accept="image/*" onChange={handleFileChange} />
-      {passportPreview && <img src={passportPreview} alt="Preview" width={100} />}
-
-      <button type="submit">Next</button>
+      <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded">
+        Next
+      </button>
     </form>
   );
 }

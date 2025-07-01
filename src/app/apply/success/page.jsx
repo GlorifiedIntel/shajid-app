@@ -17,6 +17,7 @@ export default function SuccessPage() {
         Thank you, {session?.user?.name || 'applicant'}! 🎉 <br />
         We’ve received your application and emailed your PDF summary.
       </p>
+      <p>We’ve received your application and will reach out via email.</p>
 
       <div className="button-group">
         <Link href="/dashboard">

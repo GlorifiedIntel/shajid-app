@@ -18,21 +18,43 @@ export const FormProvider = ({ children }) => {
       passportFile: null,
       passportPreview: '',
     },
-    // We'll add other step data here later
+    healthInfo: {},
+    schoolsAttended: {},
+    examResults: {},
+    programDetails: {},
+    utmeInfo: {},
   });
 
-  const updatePersonalInfo = (info) => {
-    setFormData((prev) => ({
-      ...prev,
-      personalInfo: {
-        ...prev.personalInfo,
-        ...info,
-      },
-    }));
-  };
+  const updatePersonalInfo = (data) =>
+    setFormData((prev) => ({ ...prev, personalInfo: { ...prev.personalInfo, ...data } }));
+
+  const updateHealthInfo = (data) =>
+    setFormData((prev) => ({ ...prev, healthInfo: { ...prev.healthInfo, ...data } }));
+
+  const updateSchoolsAttended = (data) =>
+    setFormData((prev) => ({ ...prev, schoolsAttended: { ...prev.schoolsAttended, ...data } }));
+
+  const updateExamResults = (data) =>
+    setFormData((prev) => ({ ...prev, examResults: { ...prev.examResults, ...data } }));
+
+  const updateProgramDetails = (data) =>
+    setFormData((prev) => ({ ...prev, programDetails: { ...prev.programDetails, ...data } }));
+
+  const updateUTMEInfo = (data) =>
+    setFormData((prev) => ({ ...prev, utmeInfo: { ...prev.utmeInfo, ...data } }));
 
   return (
-    <FormContext.Provider value={{ formData, setFormData, updatePersonalInfo }}>
+    <FormContext.Provider
+      value={{
+        formData,
+        updatePersonalInfo,
+        updateHealthInfo,
+        updateSchoolsAttended,
+        updateExamResults,
+        updateProgramDetails,
+        updateUTMEInfo,
+      }}
+    >
       {children}
     </FormContext.Provider>
   );

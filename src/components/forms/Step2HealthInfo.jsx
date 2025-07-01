@@ -3,7 +3,8 @@
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useFormData } from '@/context/FormContext';
+import { useFormContext } from '@/context/MultiStepContext';
+import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 
 const schema = z.object({
@@ -14,7 +15,8 @@ const schema = z.object({
 });
 
 export default function Step2HealthInfo() {
-  const { updateFormData } = useFormData();
+  const { formData, setFormData } = useFormContext();
+  const router = useRouter();
   const { data: session } = useSession();
 
   const {
@@ -23,61 +25,74 @@ export default function Step2HealthInfo() {
     formState: { errors },
   } = useForm({
     resolver: zodResolver(schema),
+    defaultValues: formData.healthInfo || {},
   });
 
-  const onSubmit = async (formValues) => {
-    // Save to context
-    updateFormData('step2', formValues);
+  const onSubmit = async (values) => {
+    // Update context
+    setFormData((prev) => ({
+      ...prev,
+      healthInfo: values,
+    }));
 
-    // Save to MongoDB
+    // Optional: Save to DB
     await fetch('/api/apply/step-2', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        userId: session?.user?.id,
-        data: formValues,
+        userId: session?.user?.id, // Or whatever ID you're using
+        data: values,
       }),
     });
 
-    // TODO: Route to Step 3 (use router.push if needed)
+    // Go to next step
+    router.push('/apply/step-3-schools-attended');
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <label>Do you have any chronic illness?</label>
-      <input {...register('chronicIllness')} />
-      {errors.chronicIllness && <p>{errors.chronicIllness.message}</p>}
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+      <div>
+        <label>Do you have any chronic illness?</label>
+        <input {...register('chronicIllness')} />
+        {errors.chronicIllness && <p className="text-red-500">{errors.chronicIllness.message}</p>}
+      </div>
 
-      <label>Blood Group</label>
-      <select {...register('bloodGroup')}>
-        <option value="">Select...</option>
-        <option value="A+">A+</option>
-        <option value="A−">A−</option>
-        <option value="B+">B+</option>
-        <option value="B−">B−</option>
-        <option value="AB+">AB+</option>
-        <option value="AB−">AB−</option>
-        <option value="O+">O+</option>
-        <option value="O−">O−</option>
-      </select>
-      {errors.bloodGroup && <p>{errors.bloodGroup.message}</p>}
+      <div>
+        <label>Blood Group</label>
+        <select {...register('bloodGroup')}>
+          <option value="">Select...</option>
+          <option value="A+">A+</option>
+          <option value="A−">A−</option>
+          <option value="B+">B+</option>
+          <option value="B−">B−</option>
+          <option value="AB+">AB+</option>
+          <option value="AB−">AB−</option>
+          <option value="O+">O+</option>
+          <option value="O−">O−</option>
+        </select>
+        {errors.bloodGroup && <p className="text-red-500">{errors.bloodGroup.message}</p>}
+      </div>
 
-      <label>Genotype</label>
-      <select {...register('genotype')}>
-        <option value="">Select...</option>
-        <option value="AA">AA</option>
-        <option value="AS">AS</option>
-        <option value="SS">SS</option>
-        <option value="AC">AC</option>
-        <option value="SC">SC</option>
-      </select>
-      {errors.genotype && <p>{errors.genotype.message}</p>}
+      <div>
+        <label>Genotype</label>
+        <select {...register('genotype')}>
+          <option value="">Select...</option>
+          <option value="AA">AA</option>
+          <option value="AS">AS</option>
+          <option value="SS">SS</option>
+          <option value="AC">AC</option>
+          <option value="SC">SC</option>
+        </select>
+        {errors.genotype && <p className="text-red-500">{errors.genotype.message}</p>}
+      </div>
 
-      <label>Emergency Contact Number</label>
-      <input {...register('emergencyContact')} />
-      {errors.emergencyContact && <p>{errors.emergencyContact.message}</p>}
+      <div>
+        <label>Emergency Contact Number</label>
+        <input {...register('emergencyContact')} />
+        {errors.emergencyContact && <p className="text-red-500">{errors.emergencyContact.message}</p>}
+      </div>
 
-      <button type="submit">Next</button>
+      <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded">Next</button>
     </form>
   );
 }

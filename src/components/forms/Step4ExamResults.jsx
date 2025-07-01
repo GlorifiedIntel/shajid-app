@@ -3,8 +3,9 @@
 import { useForm, useFieldArray } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useFormData } from '@/context/FormContext';
+import { useFormContext } from '@/context/MultiStepContext';
 import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 import { examSubjects } from '@/constants/subjects';
 
 const subjectSchema = z.object({
@@ -21,12 +22,13 @@ const sittingSchema = z.object({
 
 const schema = z.object({
   sitting1: sittingSchema,
-  sitting2: sittingSchema.optional(), // second sitting optional
+  sitting2: sittingSchema.optional(), // optional
 });
 
 export default function Step4ExamResults() {
-  const { updateFormData } = useFormData();
+  const { updateExamResults } = useFormContext();
   const { data: session } = useSession();
+  const router = useRouter();
 
   const {
     register,
@@ -54,7 +56,7 @@ export default function Step4ExamResults() {
   } = useFieldArray({ control, name: 'sitting2.subjects' });
 
   const onSubmit = async (formValues) => {
-    updateFormData('step4', formValues);
+    updateExamResults(formValues);
 
     await fetch('/api/apply/step-4', {
       method: 'POST',
@@ -65,7 +67,7 @@ export default function Step4ExamResults() {
       }),
     });
 
-    // TODO: Go to step 5
+    router.push('/apply/step-5-program-details');
   };
 
   const gradeOptions = ['A1', 'B2', 'B3', 'C4', 'C5', 'C6', 'D7', 'E8', 'F9'];
@@ -73,6 +75,7 @@ export default function Step4ExamResults() {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <h3>Sitting 1</h3>
+
       <label>Exam Type</label>
       <select {...register('sitting1.examType')}>
         <option value="">Select</option>
@@ -103,7 +106,10 @@ export default function Step4ExamResults() {
               <option key={g} value={g}>{g}</option>
             ))}
           </select>
-          {index >= 5 && <button type="button" onClick={() => remove1(index)}>Remove</button>}
+
+          {index >= 5 && (
+            <button type="button" onClick={() => remove1(index)}>Remove</button>
+          )}
         </div>
       ))}
 

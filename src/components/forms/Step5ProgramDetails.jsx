@@ -3,8 +3,9 @@
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useFormData } from '@/context/FormContext';
+import { useFormContext } from '@/context/MultiStepContext';
 import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 
 const schema = z.object({
   program: z.string().min(1, 'Select your preferred program'),
@@ -26,8 +27,9 @@ const campuses = [
 ];
 
 export default function Step5ProgramDetails() {
-  const { updateFormData } = useFormData();
+  const { updateProgramDetails } = useFormContext();
   const { data: session } = useSession();
+  const router = useRouter();
 
   const {
     register,
@@ -38,8 +40,10 @@ export default function Step5ProgramDetails() {
   });
 
   const onSubmit = async (formValues) => {
-    updateFormData('step5', formValues);
+    // ✅ Save in context
+    updateProgramDetails(formValues);
 
+    // ✅ Optionally save to API
     await fetch('/api/apply/step-5', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -49,7 +53,8 @@ export default function Step5ProgramDetails() {
       }),
     });
 
-    // TODO: Go to step 6
+    // ✅ Go to Step 6
+    router.push('/apply/step-6-utme');
   };
 
   return (
