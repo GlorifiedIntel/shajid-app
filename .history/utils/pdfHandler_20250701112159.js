@@ -41,7 +41,7 @@ export async function generatePDFAndSendEmail(userId, fullForm) {
   const logoBytes = await loadLogoBase64('public/shajid-logo.png'); // ✅ logo as header + watermark
   const logoImage = await pdfDoc.embedPng(logoBytes);
 
-  const qrCodeDataUrl = await QRCode.toDataURL(`https://shajidnursingcollege.edu.ng/application/verify/${userId}`);
+  const qrCodeDataUrl = await QRCode.toDataURL(`https://shajid.edu.ng/application/verify/${userId}`);
   const qrImage = await pdfDoc.embedPng(Buffer.from(qrCodeDataUrl.split(',')[1], 'base64'));
 
   // 3. Header

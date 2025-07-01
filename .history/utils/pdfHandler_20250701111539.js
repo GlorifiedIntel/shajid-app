@@ -1,0 +1,173 @@
+import PDFDocument from 'pdfkit';
+import { bufferToStream } from './bufferToStream';
+import { connectToDB } from '@/lib/mongodb';
+import { GridFSBucket } from 'mongodb';
+import nodemailer from 'nodemailer';
+
+export async function generatePDFAndSendEmail(userId, fullForm) {
+  const {
+    personalInfo,
+    healthInfo,
+    schoolsAttended,
+    examResults,
+    programDetails,
+    utmeInfo,
+  } = fullForm;
+
+  const submissionDate = new Date().toLocaleString('en-NG', {
+    dateStyle: 'long',
+    timeStyle: 'short',
+    timeZone: 'Africa/Lagos',
+  });
+
+  const doc = new PDFDocument({ margin: 50 });
+  const buffers = [];
+
+  doc.on('data', buffers.push.bind(buffers));
+  doc.on('end', async () => {
+    const pdfBuffer = Buffer.concat(buffers);
+    const stream = bufferToStream(pdfBuffer);
+
+    // ✅ Store PDF in GridFS
+    const { db } = await connectToDB();
+    const bucket = new GridFSBucket(db, { bucketName: 'pdfs' });
+
+    await bucket.deleteMany({ 'metadata.userId': userId }).catch(() => {});
+    const uploadStream = bucket.openUploadStream('application.pdf', {
+      metadata: { userId },
+    });
+    stream.pipe(uploadStream);
+
+    // ✅ Send PDF via email
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
+      },
+    });
+
+    await transporter.sendMail({
+      from: `"Shajid College" <${process.env.EMAIL_USER}>`,
+      to: personalInfo.email,
+      subject: 'Your Application PDF',
+      text: `Dear ${personalInfo.fullName},\n\nThank you for your application. Attached is a copy of your submitted details.`,
+      attachments: [
+        {
+          filename: 'application.pdf',
+          content: pdfBuffer,
+        },
+      ],
+    });
+  });
+
+  // ✅ Insert logo and header
+  try {
+    const logoPath = 'public/logo.png';
+    const logoWidth = 120;
+    const x = (doc.page.width - logoWidth) / 2;
+
+    doc.image(logoPath, x, 30, { width: logoWidth });
+  } catch (err) {
+    console.warn('Logo not found:', err.message);
+  }
+
+  doc.moveDown(4);
+  doc.fontSize(18).text('Shajid College Application Summary', { align: 'center' });
+  doc.moveDown(2);
+
+  // ✅ Section utilities
+  const section = (title) => {
+    doc.addPage();
+    doc.fontSize(14).text(title, { underline: true });
+    doc.moveDown();
+  };
+
+  const keyVals = (obj) => {
+    Object.entries(obj).forEach(([k, v]) => {
+      const val = typeof v === 'object' ? JSON.stringify(v) : v;
+      doc.fontSize(11).text(`${k}: ${val}`);
+    });
+    doc.moveDown();
+  };
+
+  // ✅ Watermark utility
+  const addWatermark = () => {
+    const watermark = 'CONFIDENTIAL';
+    doc.fontSize(60);
+    doc.fillColor('#eeeeee');
+    doc.rotate(-45, { origin: [doc.page.width / 2, doc.page.height / 2] });
+    doc.text(watermark, doc.page.width / 4, doc.page.height / 2, {
+      align: 'center',
+      opacity: 0.2,
+    });
+    doc.rotate(45, { origin: [doc.page.width / 2, doc.page.height / 2] });
+    doc.fillColor('black'); // reset
+  };
+
+  // ✅ Content
+  section('1. Personal Information');
+  keyVals(personalInfo);
+
+  section('2. Health Information');
+  keyVals(healthInfo);
+
+  section('3. Schools Attended');
+  keyVals(schoolsAttended);
+
+  section('4. Exam Results');
+  examResults.forEach((sitting, i) => {
+    doc.fontSize(12).text(`Sitting ${i + 1}:`);
+    keyVals({
+      examType: sitting.examType,
+      examYear: sitting.examYear,
+      examNumber: sitting.examNumber,
+    });
+    sitting.subjects.forEach((subj) =>
+      doc.fontSize(11).text(`- ${subj.subject}: ${subj.grade}`)
+    );
+    doc.moveDown();
+  });
+
+  section('5. Program Details');
+  keyVals(programDetails);
+
+  section('6. UTME Information');
+  keyVals(utmeInfo);
+
+  // ✅ Submission Date
+  doc.moveDown(2);
+  doc.fontSize(12).fillColor('gray').text(`Submitted on: ${submissionDate}`, {
+    align: 'right',
+  });
+
+  // ✅ Footer + Watermark for every page
+  const footerText = 'Shajid College of Nursing & Midwifery • www.shajidnursingcollege.edu.ng • info@shajidnursingcollege.edu.ng';
+  const pageCount = doc.bufferedPageRange().count;
+
+  for (let i = 0; i < pageCount; i++) {
+    doc.switchToPage(i);
+
+    // Watermark per page
+    addWatermark();
+
+    // Footer
+    const bottom = doc.page.height - 40;
+    doc
+      .fontSize(9)
+      .fillColor('gray')
+      .text(footerText, 50, bottom, {
+        align: 'center',
+        width: doc.page.width - 100,
+      });
+
+    doc
+      .fontSize(9)
+      .text(`Page ${i + 1} of ${pageCount}`, 50, bottom + 12, {
+        align: 'center',
+        width: doc.page.width - 100,
+      });
+  }
+
+  doc.end();
+}
