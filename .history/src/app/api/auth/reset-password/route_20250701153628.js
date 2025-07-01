@@ -4,7 +4,7 @@ import User from '@/models/User';
 import bcrypt from 'bcryptjs';
 
 export async function POST(req) {
-  await connectToDB();
+  await dbConnect();
 
   try {
     const { email, token, password } = await req.json();
