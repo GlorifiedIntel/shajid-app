@@ -2,21 +2,19 @@
 
 import { useSearchParams, useRouter } from 'next/navigation';
 import { useEffect } from 'react';
-import toast from 'react-hot-toast';
 
 export default function EmailVerificationFailed() {
   const searchParams = useSearchParams();
   const router = useRouter();
+
   const reason = searchParams.get('reason');
 
   useEffect(() => {
-    toast.error('Email verification failed. Redirecting to sign-in...');
-
     const timeout = setTimeout(() => {
-      router.push('/auth/sign-in');
-    }, 5000);
+      router.push('/signin');
+    }, 5000); // Redirect after 5 seconds
 
-    return () => clearTimeout(timeout);
+    return () => clearTimeout(timeout); // Cleanup on unmount
   }, [router]);
 
   return (
@@ -29,3 +27,4 @@ export default function EmailVerificationFailed() {
     </div>
   );
 }
+🔁 Optional Improvements

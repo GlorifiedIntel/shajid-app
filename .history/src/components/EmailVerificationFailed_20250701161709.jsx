@@ -13,7 +13,7 @@ export default function EmailVerificationFailed() {
     toast.error('Email verification failed. Redirecting to sign-in...');
 
     const timeout = setTimeout(() => {
-      router.push('/auth/sign-in');
+      router.push('/signin');
     }, 5000);
 
     return () => clearTimeout(timeout);
