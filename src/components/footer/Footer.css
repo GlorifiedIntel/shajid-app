@@ -2,11 +2,12 @@
 
 /* Footer styles */
 .site-footer {
-  background-color: #1a1a1a;
-  color: #fff;
+  background-color: #191919;
+  color: #e2dfdf;
   padding: 1.5rem 0;
   text-align: center;
-  
+  font-family: var(--font-play);
+
 }
 
 .footer-content {
@@ -63,7 +64,7 @@
 }
 
 .footer-content a.kevin-link {
-  color: #a0fc8e;
+  color: #d8f0d3;
   font-weight: 600;
   text-decoration: none;
 }

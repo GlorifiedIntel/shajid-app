@@ -12,7 +12,8 @@
     --caribbean-current:#006C67;
     --gunmetal:#122C34;
     --navbar-bg: #242038;
-    --jasper: #CD5334
+    --jasper: #CD5334;
+    --font-play: 'Play', sans-serif;
 }
 
 * {
@@ -30,7 +31,10 @@ body {
 a {
     color: inherit;
     text-decoration: none;
+    
 }
+
+
 
 .container {
     width: 100%;

@@ -11,7 +11,7 @@ export function withRole(Component, allowedRoles = []) {
   return async function Page(props) {
     const session = await getServerSession(authOptions);
     if (!session || !allowedRoles.includes(session.user.role)) {
-      return redirect('/auth/login');
+      return redirect('/auth/sign-in');
     }
     return <Component {...props} />;
   };

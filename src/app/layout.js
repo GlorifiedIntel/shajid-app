@@ -1,4 +1,5 @@
 import { Inter } from 'next/font/google';
+import { Play } from 'next/font/google';
 import './globals.css';
 import Navbar from '@/components/navbar/Navbar';
 import Footer from '@/components/footer/Footer';
@@ -6,6 +7,12 @@ import { FormProvider } from '@/context/FormContext';
 import { Toaster } from 'react-hot-toast'; 
 
 const inter = Inter({ subsets: ['latin'] });
+
+const play = Play({
+  subsets: ['latin'],
+  weight: ['400', '700'],
+  variable: '--font-play',
+});
 
 export const metadata = {
   title: 'Shajid College App',
