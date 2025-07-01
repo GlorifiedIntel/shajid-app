@@ -57,7 +57,7 @@ export async function generatePDFAndSendEmail(userId, fullForm) {
 
   // ✅ Add header logo and title
   try {
-    const logoPath = 'public/shajid-logo.png'; 
+    const logoPath = 'public/logo.png'; // adjust if your path is different
     const logoWidth = 120;
 
     const pageWidth = doc.page.width;
@@ -119,7 +119,7 @@ export async function generatePDFAndSendEmail(userId, fullForm) {
   keyVals(utmeInfo);
 
   // ✅ Footer (on every page)
-  const footerText = 'Shajid College of Nursing & Midwifery • www.shajidnursingcollege.edu.ng • info@shajidnursingcollege.edu.ng';
+  const footerText = 'Shajid College of Nursing & Midwifery • www.shajidcollege.edu.ng • info@shajidcollege.edu.ng';
   const pageCount = doc.bufferedPageRange().count;
 
   for (let i = 0; i < pageCount; i++) {

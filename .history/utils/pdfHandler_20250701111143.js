@@ -57,7 +57,7 @@ export async function generatePDFAndSendEmail(userId, fullForm) {
 
   // ✅ Add header logo and title
   try {
-    const logoPath = 'public/shajid-logo.png'; 
+    const logoPath = 'public/logo.png'; // adjust if your path is different
     const logoWidth = 120;
 
     const pageWidth = doc.page.width;
